@@ -1,122 +1,24 @@
 "use client";
 
-import { FormEvent, ReactNode, useRef, useState } from "react";
+import Link from "next/link";
+import { ReactNode, useRef, useState } from "react";
 import {
   ArrowDown,
   ArrowRight,
   ArrowUpRight,
   Asterisk,
-  Check,
-  Menu,
   Plus,
-  Sparkles,
-  X,
 } from "lucide-react";
 import { motion, useInView, useScroll } from "framer-motion";
-
-const ease = [0.22, 1, 0.36, 1] as [number, number, number, number];
-
-const navItems = [
-  ["What we do", "#worlds"],
-  ["Our work", "#work"],
-  ["The method", "#method"],
-  ["About", "#about"],
-];
-
-const worlds = [
-  {
-    number: "01",
-    title: "Creative industries",
-    line: "Where ideas become industries.",
-    detail: "Film · Animation · VFX · Gaming · XR · AI · Creators · Design · Digital Media · Entertainment",
-    signal: "IDEA / INDUSTRY",
-  },
-  {
-    number: "02",
-    title: "Events & experiences",
-    line: "Where moments become memories.",
-    detail: "Summits · Concerts · Festivals · Roadshows · Destination Celebrations · Private Experiences · Brand Experiences",
-    signal: "MOMENT / MEMORY",
-  },
-  {
-    number: "03",
-    title: "Media",
-    line: "Where experiences become stories.",
-    detail: "Film · Content · Production · Photography · Videography · Digital Media · Publicity",
-    signal: "EXPERIENCE / STORY",
-  },
-  {
-    number: "04",
-    title: "Image & PR",
-    line: "Where people become brands.",
-    detail: "Personal Branding · Film PR · Publicity · Media Relations · Public Image · Digital Presence",
-    signal: "PERSON / PRESENCE",
-  },
-  {
-    number: "05",
-    title: "Talent",
-    line: "Where the right people meet the right opportunity.",
-    detail: "Casting · Artists · Creators · Influencers · Speakers · Performers · Industry Talent",
-    signal: "PEOPLE / POSSIBILITY",
-  },
-];
-
-const method = [
-  ["01", "Imagine", "Tell us what exists in your mind—even if it has never existed before."],
-  ["02", "Curate", "We find the people, place, mood, story, technology and details."],
-  ["03", "Hybridize", "We combine imagination with a flexible real-world ecosystem."],
-  ["04", "Create", "The idea becomes something tangible, precise and alive."],
-  ["05", "Experience", "You live it. Your people feel it."],
-  ["06", "Remember", "The event ends. The experience remains."],
-];
-
-const projects = [
-  {
-    id: "CE25",
-    year: "2025",
-    title: "Cinematica Expo",
-    line: "Where cinema met the future.",
-    fields: "Cinema × Technology × Creativity × Business × Community",
-    role: "Event management · Creative curation · Industry engagement · Partnerships",
-    layout: "project-coral",
-  },
-  {
-    id: "CI26",
-    year: "2026",
-    title: "CINICATHON",
-    line: "Not just a competition. A launchpad for creative innovation.",
-    fields: "Hybrid Filmmaking × AVGC-XR × AI × Creative Technology",
-    role: "Program curation · Ecosystem development · Experience management",
-    layout: "project-dark",
-  },
-  {
-    id: "FOF",
-    year: "2026",
-    title: "Frames of Founders",
-    line: "Where entrepreneurship became storytelling.",
-    fields: "Documentary × Animation × Comics × Digital Media",
-    role: "Program management · Creative curation · Outreach · Media",
-    layout: "project-paper",
-  },
-  {
-    id: "CCC",
-    year: "2026",
-    title: "Cinica Creators Council Challenges",
-    line: "Taking creativity beyond the classroom.",
-    fields: "Creators × Challenges × Industry × Opportunity",
-    role: "Program management · Outreach · Creative ecosystem",
-    layout: "project-line",
-  },
-  {
-    id: "CE26",
-    year: "UPCOMING · 2026",
-    title: "Cinematica Expo — 4th Edition",
-    line: "The next chapter is coming.",
-    fields: "Cinema × Creators × Creative Economy",
-    role: "An evolving platform for the future of the creative economy",
-    layout: "project-feature",
-  },
-];
+import { ease, SectionLabel } from "../components/motion";
+import {
+  METHOD,
+  PROJECTS,
+  TAGLINES,
+  WHO_WE_SERVE,
+  WHY_HRIPOP,
+  WORLDS,
+} from "../content/site";
 
 function Reveal({
   children,
@@ -143,81 +45,15 @@ function Reveal({
   );
 }
 
-function SectionLabel({ number, children, light = false }: { number: string; children: ReactNode; light?: boolean }) {
-  return (
-    <div className={`section-label${light ? " section-label-light" : ""}`}>
-      <span>{number}</span>
-      <p>{children}</p>
-    </div>
-  );
-}
-
 export default function Home() {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [activeWorld, setActiveWorld] = useState(0);
-  const [selectedType, setSelectedType] = useState("Something new");
-  const [formComplete, setFormComplete] = useState(false);
   const { scrollYProgress } = useScroll();
-
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setFormComplete(true);
-  }
 
   return (
     <main id="top">
       <motion.div className="scroll-progress" style={{ scaleX: scrollYProgress }} />
 
-      <motion.header
-        className="site-header"
-        initial={{ opacity: 0, y: -16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.65, ease }}
-      >
-        <a className="wordmark" href="#top" aria-label="HRIPOP Media home">
-          <span>HRI</span><span>POP</span><i>✦</i><small>MEDIA</small>
-        </a>
-
-        <nav className="desktop-nav" aria-label="Primary navigation">
-          {navItems.map(([label, href]) => <a href={href} key={href}>{label}</a>)}
-        </nav>
-
-        <a className="nav-cta" href="#imagine">
-          Imagine with us <ArrowUpRight size={15} />
-        </a>
-
-        <button
-          className="menu-button"
-          type="button"
-          onClick={() => setMenuOpen((value) => !value)}
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={menuOpen}
-        >
-          {menuOpen ? <X /> : <Menu />}
-        </button>
-      </motion.header>
-
-      {menuOpen && (
-        <motion.nav className="mobile-nav" aria-label="Mobile navigation" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-          <p>Explore HRIPOP</p>
-          {navItems.map(([label, href], index) => (
-            <motion.a
-              href={href}
-              key={href}
-              onClick={() => setMenuOpen(false)}
-              initial={{ opacity: 0, x: -22 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.06 }}
-            >
-              <span>0{index + 1}</span>{label}<ArrowUpRight />
-            </motion.a>
-          ))}
-          <a className="mobile-cta" href="#imagine" onClick={() => setMenuOpen(false)}>
-            Start your experience <ArrowRight />
-          </a>
-        </motion.nav>
-      )}
-
+      {/* HERO — doc §04 */}
       <section className="editorial-hero" aria-labelledby="hero-title">
         <div className="hero-meta">
           <p>Experience-led creative company</p>
@@ -235,7 +71,7 @@ export default function Home() {
               You imagine it.
             </motion.span>
             <motion.span initial={{ y: "100%" }} animate={{ y: 0 }} transition={{ duration: 0.9, delay: 0.24, ease }}>
-              We build the <em>experience.</em>
+              We hybridize it <em>into reality.</em>
             </motion.span>
           </h1>
         </motion.div>
@@ -275,33 +111,41 @@ export default function Home() {
 
         <div className="hero-bottom">
           <p>
-            HRIPOP brings together entertainment, creative industries, technology,
-            people and place to create something audiences do not simply attend—they feel.
+            HRIPOP Media creates extraordinary experiences across creative industries,
+            entertainment, events, media and image management — from summits and concerts
+            to destination weddings, film publicity, business matchmaking and public image.
           </p>
-          <a className="text-link" href="#worlds">Enter the experience <ArrowDown size={17} /></a>
+          <div className="hero-cta-row">
+            <Link className="hero-cta" href="/contact">Imagine with us <ArrowUpRight size={15} /></Link>
+            <Link className="text-link" href="#worlds">Enter the experience <ArrowDown size={17} /></Link>
+          </div>
         </div>
       </section>
 
-      <div className="proof-rail" aria-label="Selected HRIPOP projects">
+      <div className="proof-rail" aria-label="Selected HRIPOP platforms">
         <span>Selected platforms</span>
-        <p>Cinematica Expo 2025</p>
-        <i>✦</i>
-        <p>CINICATHON 2026</p>
-        <i>✦</i>
-        <p>Frames of Founders</p>
-        <i>✦</i>
+        <p>Cinematica Expo 2025</p><i>✦</i>
+        <p>CINICATHON 2026</p><i>✦</i>
+        <p>Frames of Founders</p><i>✦</i>
         <p>Cinica Creators Council</p>
       </div>
 
+      {/* POSITIONING — doc §01, §02, §05 */}
       <section className="positioning section-pad" id="about">
         <Reveal><SectionLabel number="01" light>The difference</SectionLabel></Reveal>
         <div className="positioning-grid">
           <Reveal className="positioning-aside">
             <Asterisk />
-            <p>Not a catalogue of services. A flexible ecosystem built around the experience you want to create.</p>
+            <p>
+              Not a catalogue of services. A flexible ecosystem built around the
+              experience you want to create.
+            </p>
           </Reveal>
           <Reveal delay={0.08}>
-            <h2>Not just event management.<br /><em>Experiences that didn’t exist before.</em></h2>
+            <h2>
+              Not just event management.<br />
+              <em>Experiences that didn’t exist before.</em>
+            </h2>
           </Reveal>
         </div>
         <Reveal className="positioning-foot" delay={0.12}>
@@ -312,6 +156,7 @@ export default function Home() {
         </Reveal>
       </section>
 
+      {/* FIVE WORLDS — doc §06 */}
       <section className="worlds section-pad" id="worlds">
         <Reveal><SectionLabel number="02">Five worlds. One philosophy.</SectionLabel></Reveal>
         <div className="worlds-intro">
@@ -321,7 +166,7 @@ export default function Home() {
 
         <div className="worlds-explorer">
           <div className="world-index" role="tablist" aria-label="HRIPOP worlds">
-            {worlds.map((world, index) => (
+            {WORLDS.map((world, index) => (
               <button
                 type="button"
                 role="tab"
@@ -341,26 +186,30 @@ export default function Home() {
 
           <motion.article
             className="world-stage"
-            key={worlds[activeWorld].number}
+            key={WORLDS[activeWorld].number}
             role="tabpanel"
             initial={{ opacity: 0.5 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.35 }}
           >
             <div className="world-stage-top">
-              <span>{worlds[activeWorld].signal}</span>
-              <span>WORLD / {worlds[activeWorld].number}</span>
+              <span>{WORLDS[activeWorld].signal}</span>
+              <span>WORLD / {WORLDS[activeWorld].number}</span>
             </div>
-            <div className="world-stage-orbit"><span>{worlds[activeWorld].number}</span></div>
+            <div className="world-stage-orbit"><span>{WORLDS[activeWorld].number}</span></div>
             <div className="world-stage-copy">
-              <p>{worlds[activeWorld].line}</p>
-              <h3>{worlds[activeWorld].title}</h3>
-              <small>{worlds[activeWorld].detail}</small>
+              <p>{WORLDS[activeWorld].line}</p>
+              <h3>{WORLDS[activeWorld].title}</h3>
+              <small>{WORLDS[activeWorld].detail}</small>
+              <Link className="world-stage-link" href={`/${WORLDS[activeWorld].slug}`}>
+                Enter this world <ArrowUpRight size={14} />
+              </Link>
             </div>
           </motion.article>
         </div>
       </section>
 
+      {/* WORK PREVIEW — doc §43 */}
       <section className="work section-pad" id="work">
         <Reveal><SectionLabel number="03">Selected realities</SectionLabel></Reveal>
         <div className="work-heading">
@@ -369,37 +218,57 @@ export default function Home() {
         </div>
 
         <div className="project-grid">
-          {projects.map((project, index) => (
+          {PROJECTS.map((project, index) => {
+            const layout = ["coral", "dark", "paper", "line", "feature"][index % 5];
+            return (
             <motion.article
-              className={`project-card ${project.layout}`}
-              key={project.title}
+              className={`project-card project-${layout}`}
+              key={project.slug}
               initial={{ opacity: 0, y: 32 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-70px" }}
               transition={{ duration: 0.75, delay: (index % 2) * 0.08, ease }}
             >
-              <div className="project-meta"><span>{project.id}</span><span>{project.year}</span></div>
-              <div className="project-symbol" aria-hidden="true"><span>{project.id}</span></div>
-              <div className="project-content">
-                <p>{project.line}</p>
-                <h3>{project.title}</h3>
-                <small>{project.fields}</small>
-              </div>
-              <div className="project-role"><span>HRIPOP role</span><p>{project.role}</p><ArrowUpRight /></div>
+              <Link className="project-link" href={`/work/${project.slug}`}>
+                <div className="project-meta">
+                  <span>{project.id}</span>
+                  <span>{project.status === "upcoming" ? "UPCOMING · " : ""}{project.year}</span>
+                </div>
+                <div className="project-symbol" aria-hidden="true"><span>{project.id}</span></div>
+                <div className="project-content">
+                  <p>{project.tagline}</p>
+                  <h3>{project.title}</h3>
+                  <small>{project.ecosystem}</small>
+                </div>
+                <div className="project-role"><span>HRIPOP role</span><p>{project.role.slice(0, 3).join(" · ")}</p><ArrowUpRight /></div>
+              </Link>
             </motion.article>
-          ))}
+            );
+          })}
         </div>
+
+        <Reveal className="work-more">
+          <Link className="text-link" href="/work">
+            Explore all signature projects <ArrowRight size={16} />
+          </Link>
+        </Reveal>
       </section>
 
+      {/* METHOD — doc §35 */}
       <section className="method section-pad" id="method">
         <div className="method-heading">
-          <Reveal><SectionLabel number="04">The HRIPOP Experience™</SectionLabel></Reveal>
+          <Reveal><SectionLabel number="04" light>The HRIPOP Experience™</SectionLabel></Reveal>
           <Reveal delay={0.08}><h2>From a thought<br />to something <em>felt.</em></h2></Reveal>
-          <Reveal delay={0.12}><p>No standard package. No ordinary template. One method flexible enough to fit an industry platform, a private celebration—or an idea without a name yet.</p></Reveal>
+          <Reveal delay={0.12}>
+            <p>
+              No standard package. No ordinary template. One method flexible enough to
+              fit an industry platform, a private celebration — or an idea without a name yet.
+            </p>
+          </Reveal>
         </div>
 
         <div className="method-track">
-          {method.map(([number, title, description]) => (
+          {METHOD.map(([number, title, description]) => (
             <motion.article
               className="method-step"
               key={title}
@@ -416,6 +285,21 @@ export default function Home() {
         </div>
       </section>
 
+      {/* TAGLINES — doc §03 */}
+      <section className="tagline-index section-pad" aria-label="What we believe, in one line each">
+        <Reveal><SectionLabel number="05">One line each</SectionLabel></Reveal>
+        <Reveal delay={0.06}><h2>Say it <em>simply.</em></h2></Reveal>
+        <ul className="tagline-list">
+          {TAGLINES.map(([context, line], index) => (
+            <Reveal as="li" key={context} delay={Math.min(index * 0.04, 0.3)}>
+              <span>{context}</span>
+              <p>{line}</p>
+            </Reveal>
+          ))}
+        </ul>
+      </section>
+
+      {/* ECOSYSTEM — doc §38, §73 */}
       <section className="ecosystem" aria-label="The HRIPOP partner ecosystem">
         <div className="ecosystem-copy">
           <p>YOUR IMAGINATION</p><ArrowRight /><p>OUR ECOSYSTEM</p><ArrowRight /><p>ONE EXPERIENCE</p>
@@ -423,72 +307,84 @@ export default function Home() {
         <div className="ecosystem-ticker" aria-hidden="true">
           <div>STUDIOS ✦ ARTISTS ✦ CREATORS ✦ TECHNOLOGY ✦ PRODUCTION ✦ MEDIA ✦ HOSPITALITY ✦ TRAVEL ✦ CULTURE ✦ STUDIOS ✦ ARTISTS ✦ CREATORS ✦ TECHNOLOGY ✦ PRODUCTION ✦ MEDIA ✦ HOSPITALITY ✦ TRAVEL ✦ CULTURE ✦</div>
         </div>
+        <div className="ecosystem-cta section-pad">
+          <Reveal>
+            <h2>Don’t get a standard package.<br /><em>Get a solution built around you.</em></h2>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <Link className="text-link light" href="/ecosystem">
+              Explore the ecosystem <ArrowRight size={16} />
+            </Link>
+          </Reveal>
+        </div>
       </section>
 
+      {/* WHY + WHO — doc §39, §40 */}
+      <section className="why-serve section-pad">
+        <div className="why-serve-grid">
+          <div className="why-col">
+            <Reveal><SectionLabel number="06">Why HRIPOP?</SectionLabel></Reveal>
+            <Reveal delay={0.06}>
+              <h2>We are not a vendor.<br /><em>We are your experience partner.</em></h2>
+            </Reveal>
+            <ul className="why-list">
+              {WHY_HRIPOP.map((point, index) => (
+                <Reveal as="li" key={point} delay={Math.min(index * 0.04, 0.3)}>
+                  <i aria-hidden="true">✦</i>{point}
+                </Reveal>
+              ))}
+            </ul>
+          </div>
+          <div className="serve-col">
+            <Reveal><SectionLabel number="07">Who we serve</SectionLabel></Reveal>
+            <Reveal delay={0.06}>
+              <h2>Different situations.<br /><em>One philosophy.</em></h2>
+            </Reveal>
+            <ul className="serve-list">
+              {WHO_WE_SERVE.map(([audience, detail], index) => (
+                <Reveal as="li" key={audience} delay={Math.min(index * 0.04, 0.3)}>
+                  <strong>{audience}</strong>
+                  <small>{detail}</small>
+                </Reveal>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* MANIFESTO — doc §05, §65 */}
       <section className="manifesto section-pad">
         <Reveal className="manifesto-brand"><span>✦</span> HRIPOP MEDIA</Reveal>
         <motion.blockquote initial={{ opacity: 0.15 }} whileInView={{ opacity: 1 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 1 }}>
           We don’t create memories.<br />We create the moments<br />from which <em>memories are made.</em>
         </motion.blockquote>
-        <div className="manifesto-foot"><p>An event ends. An experience stays.</p><p>Imagination, hybridized into reality.</p></div>
+        <div className="manifesto-foot">
+          <p>An event ends. An experience stays.</p>
+          <p>Imagine it. Feel it. Live it. Remember it.</p>
+        </div>
       </section>
 
-      <section className="imagine section-pad" id="imagine">
-        <div className="imagine-heading">
-          <Reveal><SectionLabel number="05">The Experience Lab</SectionLabel></Reveal>
-          <Reveal delay={0.08}><h2>What are you<br /><em>imagining?</em></h2></Reveal>
-          <Reveal delay={0.12}><p>Don’t worry if it doesn’t fit a category. Tell us what you see in your mind. We’ll figure out how to make it real.</p></Reveal>
-        </div>
-
-        <Reveal className="idea-panel" delay={0.08}>
-          {formComplete ? (
-            <motion.div className="success-state" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-              <div><Check /></div>
-              <span>A beautiful beginning</span>
-              <h3>Your imagination has taken its first step toward reality.</h3>
-              <p>Thank you for starting the conversation with HRIPOP Media.</p>
-              <button type="button" onClick={() => setFormComplete(false)}>Share another idea <ArrowRight /></button>
-            </motion.div>
-          ) : (
-            <form onSubmit={handleSubmit}>
-              <fieldset>
-                <legend>I’m imagining…</legend>
-                <div className="idea-types">
-                  {["An industry platform", "A live experience", "A destination story", "A public story", "Something new"].map((type) => (
-                    <button
-                      type="button"
-                      className={selectedType === type ? "selected" : ""}
-                      onClick={() => setSelectedType(type)}
-                      aria-pressed={selectedType === type}
-                      key={type}
-                    >
-                      {type}
-                    </button>
-                  ))}
-                </div>
-              </fieldset>
-              <input type="hidden" name="experienceType" value={selectedType} />
-              <label><span>My name is</span><input name="name" type="text" placeholder="Your name" autoComplete="name" required /></label>
-              <label><span>You can reach me at</span><input name="email" type="email" placeholder="you@email.com" autoComplete="email" required /></label>
-              <label><span>Here’s what I see</span><textarea name="idea" placeholder="A summit that feels like a festival…" rows={3} required /></label>
-              <button className="submit-button" type="submit">Submit your imagination <span><Sparkles /></span></button>
-            </form>
-          )}
+      {/* FINAL CTA — doc §75 */}
+      <section className="home-final section-pad" id="imagine">
+        <Reveal><SectionLabel number="08">What are you imagining?</SectionLabel></Reveal>
+        <Reveal delay={0.06}>
+          <h2>
+            Don’t worry if it hasn’t<br />
+            been done before.<br />
+            <em>That’s our job.</em>
+          </h2>
+        </Reveal>
+        <Reveal delay={0.12}>
+          <p>
+            Tell us what you see in your mind. We’ll bring together the people, places,
+            ideas, technology, talent and expertise required to turn it into something real.
+          </p>
+        </Reveal>
+        <Reveal delay={0.16} className="home-final-actions">
+          <Link className="cta-primary" href="/contact">Submit your imagination <ArrowUpRight size={16} /></Link>
+          <Link className="text-link light" href="/about">Meet HRIPOP <ArrowRight size={16} /></Link>
         </Reveal>
       </section>
-
-      <footer>
-        <div className="footer-main">
-          <a className="footer-wordmark" href="#top">HRIPOP<span>✦</span></a>
-          <p>Imagine it.<br />Feel it. Live it.<br /><em>Remember it.</em></p>
-          <a className="back-top" href="#top">Back to top <ArrowUpRight /></a>
-        </div>
-        <div className="footer-bottom">
-          <p>© 2026 HRIPOP Media. All rights reserved.</p>
-          <p>Creative Industries · Events · Media · Image Management</p>
-          <nav aria-label="Footer navigation"><a href="#worlds">What we do</a><a href="#work">Our work</a><a href="#imagine">Contact</a></nav>
-        </div>
-      </footer>
     </main>
   );
 }
