@@ -168,6 +168,7 @@ a {
 .hero-shade {
   z-index: -2;
   background:
+    radial-gradient(circle at 50% 52%, rgba(255,90,54,0.12) 0, transparent 42%),
     radial-gradient(circle at 50% 56%, transparent 0, rgba(0,0,0,0.1) 34%, rgba(0,0,0,0.58) 82%),
     linear-gradient(180deg, rgba(0,0,0,0.52) 0, rgba(0,0,0,0.02) 44%, rgba(0,0,0,0.86) 100%);
 }
@@ -493,11 +494,9 @@ footer em {
   transform: scaleY(1);
 }
 
-.world-ember::before { background: linear-gradient(90deg, rgba(255,90,54,0.3), transparent 65%); }
-.world-sun::before { background: linear-gradient(90deg, rgba(255,184,70,0.28), transparent 65%); }
-.world-violet::before { background: linear-gradient(90deg, rgba(127,96,255,0.28), transparent 65%); }
-.world-rose::before { background: linear-gradient(90deg, rgba(255,87,150,0.25), transparent 65%); }
-.world-mint::before { background: linear-gradient(90deg, rgba(95,225,182,0.22), transparent 65%); }
+.world-brand::before {
+  background: linear-gradient(90deg, rgba(255,90,54,0.3), transparent 65%);
+}
 
 .world-number {
   color: rgba(240,237,229,0.4);
@@ -673,10 +672,9 @@ footer em {
   opacity: 0.8;
 }
 
-.project-orange .project-glow { background: radial-gradient(circle at 32% 32%, #ffd29a, #ff5a36 27%, transparent 70%); }
-.project-violet .project-glow { background: radial-gradient(circle at 32% 32%, #dac7ff, #713cff 27%, transparent 70%); }
-.project-gold .project-glow { background: radial-gradient(circle at 32% 32%, #fff0a7, #e39421 27%, transparent 70%); }
-.project-ice .project-glow { background: radial-gradient(circle at 32% 32%, #fff, #69b8b0 27%, transparent 70%); }
+.project-brand .project-glow {
+  background: radial-gradient(circle at 32% 32%, #ffd6cb, var(--accent) 27%, transparent 70%);
+}
 
 .project-top,
 .project-copy {
