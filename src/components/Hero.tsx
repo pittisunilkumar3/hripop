@@ -3,34 +3,48 @@ import { Play } from "lucide-react";
 import FadeUp from "./FadeUp";
 import TypingEffect from "./TypingEffect";
 
-const VIDEO_SRC =
-  "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260606_170109_f96e01a5-b0db-4274-b24d-8d97e99ec928.mp4";
-
 export default function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Autoplay fallback: some browsers only honour play() from a user-gesture-
-  // adjacent context even with muted/playsInline set, so nudge it once on mount.
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    const promise = video.play();
-    if (promise !== undefined) {
-      promise.catch(() => {
-        // Autoplay was blocked; the muted + playsInline attributes cover the
-        // common path, and the poster-less first frame still renders.
-      });
-    }
+    const tryPlay = () => {
+      const promise = video.play();
+      if (promise !== undefined) {
+        promise.catch(() => {
+          // Autoplay blocked — retry on the first user interaction.
+          const resume = () => {
+            video.play().catch(() => {});
+            window.removeEventListener("pointerdown", resume);
+            window.removeEventListener("keydown", resume);
+          };
+          window.addEventListener("pointerdown", resume, { once: true });
+          window.addEventListener("keydown", resume, { once: true });
+        });
+      }
+    };
+
+    tryPlay();
   }, []);
 
   return (
     <>
-      {/* Full-screen looping background video */}
+      {/* Atmospheric fallback — guarantees a cinematic backdrop even before
+          (or instead of) the video, so the screen is never plain black. */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,#1a2340_0%,#0b1020_45%,#000000_100%)]"
+      />
+
+      {/* Full-screen looping background video — poster (matching frame 0)
+          paints instantly while the optimized file streams in. */}
       <video
         ref={videoRef}
         className="absolute inset-0 h-full w-full object-cover"
-        src={VIDEO_SRC}
+        src="/hero-bg.mp4"
+        poster="/hero-poster.jpg"
         autoPlay
         muted
         loop
