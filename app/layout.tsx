@@ -10,19 +10,19 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     metadataBase: new URL(base),
-    title: "HRIPOP Media — Imagination, Hybridized Into Reality",
+    title: "HRIPOP Media — You Imagine It. We Build the Experience.",
     description:
       "HRIPOP Media creates extraordinary experiences across creative industries, events, destinations, media, talent and image management.",
     openGraph: {
-      title: "HRIPOP Media — Imagination, Hybridized Into Reality",
-      description: "You bring the imagination. We build the experience.",
+      title: "HRIPOP Media — You Imagine It. We Build the Experience.",
+      description: "Imagination, hybridized into reality.",
       type: "website",
       images: [{ url: `${base}/og.png`, width: 1731, height: 909, alt: "HRIPOP Media" }],
     },
     twitter: {
       card: "summary_large_image",
-      title: "HRIPOP Media — Imagination, Hybridized Into Reality",
-      description: "You bring the imagination. We build the experience.",
+      title: "HRIPOP Media — You Imagine It. We Build the Experience.",
+      description: "Imagination, hybridized into reality.",
       images: [`${base}/og.png`],
     },
   };
