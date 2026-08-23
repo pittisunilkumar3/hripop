@@ -1,9 +1,9 @@
 {
-  "name": "vertx-hero",
+  "name": "hripop-media-site",
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "VERTX — full-screen cinematic hero landing page",
+  "description": "HRIPOP Media \u2014 cinematic dark website. Imagination, Hybridized into Reality.",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
