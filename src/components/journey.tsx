@@ -15,7 +15,7 @@ export default function Journey() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section className="relative overflow-hidden border-y border-white/10 bg-white/[0.02] py-20 sm:py-28">
+    <section className="relative overflow-hidden border-y border-white/10 bg-white/[0.02] py-[3.25rem] sm:py-20">
       {/* Ambient glow */}
       <div
         aria-hidden="true"

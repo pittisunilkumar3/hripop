@@ -66,7 +66,7 @@ body {
   position: relative;
   overflow: hidden;
   scroll-margin-top: 6rem;
-  padding: 8.5rem 0;
+  padding: 5rem 0;
   background: var(--hr-black);
 }
 
@@ -906,7 +906,7 @@ body {
 
 /* Experience lab */
 .lab-section {
-  padding-top: 3rem;
+  padding-top: 5rem;
 }
 
 .lab-frame {
@@ -1374,7 +1374,7 @@ textarea.enquiry-input {
 /* Footer */
 .site-footer {
   overflow: hidden;
-  padding: 6rem 0 2.5rem;
+  padding: 4.5rem 0 2.5rem;
   border-top: 1px solid var(--hr-line);
   background: #000;
 }
@@ -1477,7 +1477,7 @@ textarea.enquiry-input {
 }
 
 @media (max-width: 1024px) {
-  .section-shell { padding-block: 7rem; }
+  .section-shell { padding-block: 4.25rem; }
   .philosophy-layout { grid-template-columns: 5rem 1fr; gap: 3rem; }
   .philosophy-marker p { display: none; }
   .experience-layout,
@@ -1500,7 +1500,7 @@ textarea.enquiry-input {
 }
 
 @media (max-width: 720px) {
-  .section-shell { padding-block: 5.5rem; }
+  .section-shell { padding-block: 3.25rem; }
   .section-container { width: min(100% - 2rem, 80rem); }
   .section-title { font-size: clamp(2.35rem, 11.5vw, 4rem); }
   .section-eyebrow { font-size: .6rem; letter-spacing: .22em; }
@@ -1529,7 +1529,7 @@ textarea.enquiry-input {
   .project-card-wrap--5 .project-card { display: block; }
   .project-card-wrap--5 .project-visual { min-height: 17rem; border-right: 0; border-bottom: 1px solid var(--hr-line); }
   .project-card__arrow { display: none; }
-  .lab-section { padding-top: 1.5rem; }
+  .lab-section { padding-top: 3.25rem; }
   .lab-frame { border-radius: 1rem; }
   .lab-header { display: block; }
   .lab-code { display: block; margin-top: 2rem; }
