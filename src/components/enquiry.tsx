@@ -6,7 +6,7 @@ import SectionHeading from "./section-heading";
 import { BRAND, CONTACT } from "../content";
 
 const inputClass =
-  "w-full rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-light text-white placeholder:text-white/35 outline-none backdrop-blur-sm transition-colors focus:border-white/40";
+  "enquiry-input";
 
 export default function Enquiry() {
   const [sent, setSent] = useState(false);
@@ -48,24 +48,28 @@ export default function Enquiry() {
   };
 
   return (
-    <section id="contact" className="relative scroll-mt-24 border-t border-white/10 bg-white/[0.02] py-24 sm:py-32">
-      <div className="mx-auto max-w-2xl px-5 sm:px-6">
-        <SectionHeading
-          eyebrow={CONTACT.eyebrow}
-          title={CONTACT.title}
-          lead={CONTACT.punch}
-        />
+    <section id="contact" className="section-shell enquiry-section">
+      <div className="section-container enquiry-layout">
+        <div className="enquiry-intro">
+          <SectionHeading eyebrow={CONTACT.eyebrow} title={CONTACT.title} lead={CONTACT.punch} align="left" />
 
         <FadeUp delay={0.3}>
-          <p className="mt-6 text-center text-sm font-light text-white/50 sm:text-base">
+            <p className="enquiry-lead">
             {CONTACT.lead} It could be an event, summit, concert, film launch, roadshow, destination
             wedding, business gathering, publicity campaign, image transformation — or something you
             don’t even know how to describe yet.
           </p>
         </FadeUp>
 
+          <div className="enquiry-signal" aria-hidden="true">
+            <span>OPEN FOR IDEAS</span>
+            <i />
+            <small>INDIA / GLOBAL</small>
+          </div>
+        </div>
+
         <FadeUp delay={0.45}>
-          <div className="relative mt-12 rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm sm:mt-16 sm:p-10">
+          <div className="enquiry-form-shell">
             <AnimatePresence mode="wait">
               {sent ? (
                 <motion.div
@@ -73,28 +77,28 @@ export default function Enquiry() {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
-                  className="flex flex-col items-center py-8 text-center"
+                  className="enquiry-success"
                 >
-                  <span className="flex h-14 w-14 items-center justify-center rounded-full border border-white/20 bg-white/10">
+                  <span className="enquiry-success__icon">
                     <Check className="h-6 w-6 text-white" />
                   </span>
-                  <h3 className="mt-6 text-xl font-medium tracking-tight text-white">
+                  <h3>
                     Your imagination is on its way.
                   </h3>
-                  <p className="mt-3 max-w-sm text-sm font-light text-white/50">
+                  <p>
                     Your email app should have opened with everything pre-filled. If it didn’t,
                     send it directly:
                   </p>
                   <a
                     href={mailto}
-                    className="mt-5 break-all text-sm font-medium text-white underline decoration-white/30 underline-offset-4 hover:decoration-white"
+                    className="enquiry-success__email"
                   >
                     {BRAND.email}
                   </a>
                   <button
                     type="button"
                     onClick={() => setSent(false)}
-                    className="mt-8 rounded-full border border-white/15 bg-white/5 px-6 py-2.5 text-sm font-medium text-white/80 transition-all hover:border-white/30 hover:text-white"
+                    className="enquiry-success__reset"
                   >
                     Send another idea
                   </button>
@@ -106,26 +110,26 @@ export default function Enquiry() {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0, y: -12 }}
                   onSubmit={handleSubmit}
-                  className="space-y-4"
+                  className="enquiry-form"
                 >
-                  <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="enquiry-row">
                     <input name="name" type="text" placeholder="Your name" autoComplete="name" required className={inputClass} />
                     <input name="email" type="email" placeholder="you@email.com" autoComplete="email" required className={inputClass} />
                   </div>
-                  <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="enquiry-row">
                     <input name="organization" type="text" placeholder="Company / studio / brand (optional)" autoComplete="organization" className={inputClass} />
-                    <div className="relative">
+                    <div className="enquiry-select">
                       <select name="type" defaultValue={CONTACT.types[0]} className={`${inputClass} appearance-none pr-11`} aria-label="What are you looking for?">
                         {CONTACT.types.map((type) => (
-                          <option key={type} value={type} className="bg-[#0b0b10] text-white">
+                          <option key={type} value={type} className="bg-black text-white">
                             {type}
                           </option>
                         ))}
                       </select>
-                      <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/40" aria-hidden="true" />
+                      <ChevronDown aria-hidden="true" />
                     </div>
                   </div>
-                  <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="enquiry-row">
                     <input name="location" type="text" placeholder="City, country or destination" className={inputClass} />
                     <input name="timeline" type="text" placeholder="e.g. November 2026, flexible" className={inputClass} />
                   </div>
@@ -134,16 +138,14 @@ export default function Enquiry() {
                     placeholder="Tell us your idea — don’t worry if it doesn’t fit a category yet."
                     rows={5}
                     required
-                    className={`${inputClass} resize-none`}
+                    className={inputClass}
                   />
                   <button
                     type="submit"
-                    className="btn-glow flex w-full items-center justify-center gap-2.5 rounded-full bg-slate-950 py-3.5 pl-8 pr-4 text-sm font-medium text-white transition-transform hover:scale-[1.02] active:scale-100 sm:w-auto sm:text-base"
+                    className="action-pill enquiry-submit"
                   >
                     {CONTACT.cta}
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full border border-white/30">
-                      <Sparkles className="h-3.5 w-3.5" />
-                    </span>
+                    <Sparkles />
                   </button>
                 </motion.form>
               )}

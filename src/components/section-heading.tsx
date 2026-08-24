@@ -1,4 +1,5 @@
 import FadeUp from "./FadeUp";
+import KineticHeading from "./KineticHeading";
 
 type SectionHeadingProps = {
   eyebrow: string;
@@ -10,26 +11,20 @@ type SectionHeadingProps = {
 export default function SectionHeading({ eyebrow, title, lead, align = "center" }: SectionHeadingProps) {
   const centered = align === "center";
   return (
-    <div className={`${centered ? "mx-auto text-center" : "text-left"} max-w-3xl`}>
+    <div className={`section-heading ${centered ? "section-heading--center" : "section-heading--left"}`}>
       <FadeUp>
         <p
-          className={`flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.25em] text-white/60 sm:gap-3 sm:text-xs md:tracking-[0.3em] ${
-            centered ? "justify-center" : ""
-          }`}
+          className={`section-eyebrow ${centered ? "justify-center" : ""}`}
         >
-          <span className="inline-block h-px w-4 bg-white/40 sm:w-6" />
+          <span className="section-eyebrow__line" />
           {eyebrow}
-          {centered && <span className="inline-block h-px w-4 bg-white/40 sm:w-6" />}
+          {centered && <span className="section-eyebrow__line" />}
         </p>
       </FadeUp>
-      <FadeUp delay={0.15}>
-        <h2 className="mt-4 text-2xl font-medium leading-[1.15] tracking-tight text-white sm:text-3xl md:text-4xl lg:text-5xl">
-          {title}
-        </h2>
-      </FadeUp>
+      <KineticHeading text={title} className="section-title" />
       {lead && (
         <FadeUp delay={0.3}>
-          <p className="mt-4 text-sm font-light leading-relaxed text-white/50 sm:text-base">{lead}</p>
+          <p className="section-lead">{lead}</p>
         </FadeUp>
       )}
     </div>
