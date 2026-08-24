@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Hexagon, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { EASE } from "./FadeUp";
 import { BRAND, HERO } from "../content";
 
@@ -44,14 +44,14 @@ export default function Navbar() {
         }`}
       >
         {/* Logo */}
-        <a href="#top" className="group flex items-center gap-2.5 sm:gap-3" aria-label={`${BRAND.name} home`}>
-          <Hexagon
-            size={24}
-            strokeWidth={1.5}
-            className="text-white transition-transform duration-300 group-hover:rotate-[30deg]"
+        <a href="#top" className="group flex items-center gap-2 sm:gap-2.5" aria-label={`${BRAND.name} home`}>
+          <img
+            src="/hripop-logo.png"
+            alt="HRIPOP"
+            className="h-6 w-auto transition-transform duration-300 group-hover:scale-105 sm:h-7"
           />
-          <span className="text-[15px] font-semibold tracking-tight text-white sm:text-base">
-            HRIPOP<span className="text-white/50"> Media</span>
+          <span className="text-[15px] font-semibold tracking-tight text-white/60 sm:text-base">
+            Media
           </span>
         </a>
 

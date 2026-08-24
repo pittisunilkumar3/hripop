@@ -31,3 +31,6 @@ dist-ssr
 
 # Source brief (not part of the app)
 *.docx
+
+# original design assets (use optimized copies in public/ instead)
+/hripop logo (3).png

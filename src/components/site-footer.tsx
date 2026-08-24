@@ -1,4 +1,4 @@
-import { Hexagon, Instagram, Linkedin, Mail, Youtube } from "lucide-react";
+import { Instagram, Linkedin, Mail, Youtube } from "lucide-react";
 import { BRAND, FOOTER } from "../content";
 
 export default function SiteFooter() {
@@ -10,10 +10,12 @@ export default function SiteFooter() {
           {/* Brand */}
           <div className="footer-brand">
             <a href="#top" className="footer-logo group" aria-label={`${BRAND.name} home`}>
-              <Hexagon />
-              <span>
-                HRIPOP<small> Media</small>
-              </span>
+              <img
+                src="/hripop-logo.png"
+                alt="HRIPOP"
+                className="h-6 w-auto transition-transform duration-300 group-hover:scale-105"
+              />
+              <span className="footer-logo-media">Media</span>
             </a>
             <p>
               Creative Industries • Events • Experiences • Media • Talent • Image Management.
